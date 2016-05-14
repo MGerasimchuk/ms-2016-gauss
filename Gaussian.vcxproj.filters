@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="recursiveGaussian_cuda.cu">
-      <Filter>Source files</Filter>
-    </CudaCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Header files">
       <UniqueIdentifier>{ca30c77f-1c3b-4994-9142-66f55374e166}</UniqueIdentifier>
     </Filter>
@@ -18,11 +13,17 @@
     <Filter Include="Header files\Cuda helpers">
       <UniqueIdentifier>{7de50730-7e54-4236-b0aa-3a97973fd542}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\Gaussian">
+      <UniqueIdentifier>{500dcbab-a586-47cb-8330-a780851448e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\ImageHelper">
+      <UniqueIdentifier>{4f5a3330-50dc-4807-ab55-c013957b8094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\ImageHelper">
+      <UniqueIdentifier>{2ae0f7ee-dad5-4054-bd95-f467c961ec94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="recursiveGaussian_kernel.cuh">
-      <Filter>Source files</Filter>
-    </ClInclude>
     <ClInclude Include="helper_cuda.h">
       <Filter>Header files\Cuda helpers</Filter>
     </ClInclude>
@@ -44,6 +45,15 @@
     <ClInclude Include="helper_timer.h">
       <Filter>Header files\Cuda helpers</Filter>
     </ClInclude>
+    <ClInclude Include="recursiveGaussian_kernel.cuh">
+      <Filter>Source files\Gaussian</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageInterface.h">
+      <Filter>Header files\ImageHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="PPMInterface.h">
+      <Filter>Header files\ImageHelper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lena.ppm">
@@ -54,5 +64,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="PPMInterface.cpp">
+      <Filter>Source files\ImageHelper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="recursiveGaussian_cuda.cu">
+      <Filter>Source files\Gaussian</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

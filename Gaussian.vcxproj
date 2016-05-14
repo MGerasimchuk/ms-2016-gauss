@@ -161,10 +161,13 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="helper_math.h" />
     <ClInclude Include="helper_string.h" />
     <ClInclude Include="helper_timer.h" />
+    <ClInclude Include="ImageInterface.h" />
+    <ClInclude Include="PPMInterface.h" />
     <ClInclude Include="recursiveGaussian_kernel.cuh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PPMInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lena.ppm" />
