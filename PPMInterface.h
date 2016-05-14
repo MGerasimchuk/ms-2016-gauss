@@ -3,6 +3,6 @@
 class PPMInterface : public ImageInterface
 {
 public:
-	virtual bool load(const char *file, unsigned char **data,
+	virtual unsigned char ** load(const char *file,
 		unsigned int *w, unsigned int *h);
 };

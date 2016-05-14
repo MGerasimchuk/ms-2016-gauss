@@ -13,6 +13,13 @@
 #include <string.h>
 #include <math.h>
 
+/** FOR IMAGE HELPER */
+#include <map>
+#include "ImageInterface.h"
+#include "PPMInterface.h"
+
+
+
 #define MAX(a,b) ((a > b) ? a : b)
 
 #define USE_SIMPLE_FILTER 0
@@ -33,7 +40,10 @@ StopWatchInterface *timer = 0;
 
 bool runBenchmark = false;
 
-const char *sSDKsample = "CUDA Recursive Gaussian";
+/** ALLOW EXTENSIONS */
+std::map<std::string, ImageInterface*> interfaces = {
+	{ "ppm", new PPMInterface() } //PPM
+};
 
 extern "C"
 void transpose(unsigned int *d_src, unsigned int *d_dest, unsigned int width, int height);
@@ -115,22 +125,13 @@ runSingleTest(const char *ref_file, const char *exec_path)
 	return (nTotalErrors == 0);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Program main
-////////////////////////////////////////////////////////////////////////////////
-int
-main(int argc, char **argv)
+
+void applyFilter(const char * image_path, const char * outputFile)
 {
-	printf("%s Starting...\n\n", sSDKsample);
-
-	//printf("NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.\n\n");
-
-	// Get the path of the filename
-	char *image_path = NULL;
-	image_path = new char[255];
-	strcpy(image_path, "C:/ProgramData/NVIDIA Corporation/CUDA Samples/v7.5/3_Imaging/recursiveGaussian/data/lena.ppm");
-
-	sdkLoadPPM4ub(image_path, (unsigned char **)&h_img, &width, &height);
+	//printf("Starting...\n\n");
+	unsigned char ** temp = interfaces["ppm"]->load(image_path, &width, &height);
+	h_img = (unsigned int*)temp;
+	//sdkLoadPPM4ub(image_path, (unsigned char **)&h_img, &width, &height);
 
 	if (!h_img)
 	{
@@ -141,7 +142,7 @@ main(int argc, char **argv)
 	printf("Loaded '%s', %d x %d pixels\n", image_path, width, height);
 
 	nthreads = 64; //потоки
-	sigma = 1; //радиус размытия
+	//sigma = 1; //радиус размытия
 
 
 	initCudaBuffers();
@@ -149,7 +150,7 @@ main(int argc, char **argv)
 	if (image_path)
 	{
 		printf("(Automated Testing)\n");
-		bool testPassed = runSingleTest(image_path, argv[0]);
+		bool testPassed = runSingleTest(image_path, outputFile);
 
 		cleanup();
 
@@ -161,5 +162,24 @@ main(int argc, char **argv)
 		cudaDeviceReset();
 
 		exit(testPassed ? EXIT_SUCCESS : EXIT_FAILURE);
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Program main
+////////////////////////////////////////////////////////////////////////////////
+int main(int argc, char **argv)
+{
+	if (argc < 3) {
+		printf("Error input arguments!\n");
+		return 0;
+	}
+	// Get the path of the filename
+	sigma = atoi(argv[1]); //читаем радиус размытия из входных параметров
+
+	/** Обрабатывем файлы*/
+	for (int i = 2; i < argc; i++) {
+		applyFilter(argv[i], argv[0]);
 	}
 }
