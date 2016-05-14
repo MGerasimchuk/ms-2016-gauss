@@ -151,17 +151,20 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
     <CudaCompile Include="recursiveGaussian_cuda.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="exception.h" />
     <ClInclude Include="helper_cuda.h" />
+    <ClInclude Include="helper_functions.h" />
+    <ClInclude Include="helper_image.h" />
     <ClInclude Include="helper_math.h" />
     <ClInclude Include="helper_string.h" />
+    <ClInclude Include="helper_timer.h" />
     <ClInclude Include="recursiveGaussian_kernel.cuh" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gaussianFunc.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lena.ppm" />

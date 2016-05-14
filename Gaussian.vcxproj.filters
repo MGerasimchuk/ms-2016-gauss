@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="kernel.cu">
-      <Filter>Source files</Filter>
-    </CudaCompile>
     <CudaCompile Include="recursiveGaussian_cuda.cu">
       <Filter>Source files</Filter>
     </CudaCompile>
@@ -18,19 +15,34 @@
     <Filter Include="Resource files">
       <UniqueIdentifier>{a71a8abd-45d6-4032-99c5-97f87a77ef2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header files\Cuda helpers">
+      <UniqueIdentifier>{7de50730-7e54-4236-b0aa-3a97973fd542}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="helper_cuda.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="helper_math.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="helper_string.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="recursiveGaussian_kernel.cuh">
       <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_cuda.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_math.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_string.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_functions.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="exception.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_image.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_timer.h">
+      <Filter>Header files\Cuda helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +51,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gaussianFunc.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
