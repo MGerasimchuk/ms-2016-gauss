@@ -19,8 +19,9 @@ Recursive Gaussian filter
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <helper_cuda.h>
-#include <helper_math.h>
+
+#include "helper_cuda.h"
+#include "helper_math.h"
 
 #define BLOCK_DIM 16
 #define CLAMP_TO_EDGE 1

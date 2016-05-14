@@ -38,8 +38,8 @@ Thanks to David Tschumperl� and all the CImg contributors!
 #include <string.h>
 
 #include <cuda_runtime.h>
-#include <helper_cuda.h>
-#include <helper_math.h>
+#include "helper_cuda.h"
+#include "helper_math.h"
 
 #include "recursiveGaussian_kernel.cuh"
 
@@ -59,7 +59,7 @@ void transpose(uint *d_src, uint *d_dest, uint width, int height)
 {
 	dim3 grid(iDivUp(width, BLOCK_DIM), iDivUp(height, BLOCK_DIM), 1);
 	dim3 threads(BLOCK_DIM, BLOCK_DIM, 1);
-	d_transpose << < grid, threads >> >(d_dest, d_src, width, height);
+	d_transpose <<< grid, threads >> >(d_dest, d_src, width, height);
 	getLastCudaError("Kernel execution failed");
 }
 
@@ -137,7 +137,7 @@ void gaussianFilterRGBA(uint *d_src, uint *d_dest, uint *d_temp, int width, int 
 #if USE_SIMPLE_FILTER
 	d_simpleRecursive_rgba << < iDivUp(width, nthreads), nthreads >> >(d_src, d_temp, width, height, ema);
 #else
-	d_recursiveGaussian_rgba << < iDivUp(width, nthreads), nthreads >> >(d_src, d_temp, width, height, a0, a1, a2, a3, b1, b2, coefp, coefn);
+	d_recursiveGaussian_rgba <<< iDivUp(width, nthreads), nthreads >> >(d_src, d_temp, width, height, a0, a1, a2, a3, b1, b2, coefp, coefn);
 #endif
 	getLastCudaError("Kernel execution failed");
 
@@ -148,7 +148,7 @@ void gaussianFilterRGBA(uint *d_src, uint *d_dest, uint *d_temp, int width, int 
 #if USE_SIMPLE_FILTER
 	d_simpleRecursive_rgba << < iDivUp(height, nthreads), nthreads >> >(d_dest, d_temp, height, width, ema);
 #else
-	d_recursiveGaussian_rgba << < iDivUp(height, nthreads), nthreads >> >(d_dest, d_temp, height, width, a0, a1, a2, a3, b1, b2, coefp, coefn);
+	d_recursiveGaussian_rgba <<< iDivUp(height, nthreads), nthreads >> >(d_dest, d_temp, height, width, a0, a1, a2, a3, b1, b2, coefp, coefn);
 #endif
 	getLastCudaError("Kernel execution failed");
 

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="recursiveGaussian_cuda.cu" />
+    <CudaCompile Include="kernel.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{ca30c77f-1c3b-4994-9142-66f55374e166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{f3deb34b-b2f2-4bfe-a996-66b84e73d635}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="helper_cuda.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_math.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="recursiveGaussian_kernel.cuh" />
+    <ClInclude Include="helper_string.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
