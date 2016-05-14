@@ -3,6 +3,8 @@
 #include "device_launch_parameters.h"
 
 #include <stdio.h>
+#include "gaussianFunc.cpp"
+
 
 cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
 
@@ -14,6 +16,13 @@ __global__ void addKernel(int *c, const int *a, const int *b)
 
 int main()
 {
+	/** CUDA */
+	gaussianMain();
+
+
+
+	return 0;
+	/** THIS SAMPLE */
     const int arraySize = 5;
     const int a[arraySize] = { 1, 2, 3, 4, 5 };
     const int b[arraySize] = { 10, 20, 30, 40, 50 };

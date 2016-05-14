@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="recursiveGaussian_cuda.cu" />
-    <CudaCompile Include="kernel.cu" />
+    <CudaCompile Include="kernel.cu">
+      <Filter>Source files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="recursiveGaussian_cuda.cu">
+      <Filter>Source files</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header files">
@@ -10,6 +14,9 @@
     </Filter>
     <Filter Include="Source files">
       <UniqueIdentifier>{f3deb34b-b2f2-4bfe-a996-66b84e73d635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{a71a8abd-45d6-4032-99c5-97f87a77ef2b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -19,9 +26,21 @@
     <ClInclude Include="helper_math.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="recursiveGaussian_kernel.cuh" />
     <ClInclude Include="helper_string.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="recursiveGaussian_kernel.cuh">
+      <Filter>Source files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lena.ppm">
+      <Filter>Resource files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gaussianFunc.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

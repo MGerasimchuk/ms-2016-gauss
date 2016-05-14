@@ -160,6 +160,12 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="helper_string.h" />
     <ClInclude Include="recursiveGaussian_kernel.cuh" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gaussianFunc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lena.ppm" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 7.5.targets" />
