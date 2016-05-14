@@ -129,7 +129,13 @@ runSingleTest(const char *ref_file, const char *exec_path)
 void applyFilter(const char * image_path, const char * outputFile)
 {
 	//printf("Starting...\n\n");
-	unsigned char ** temp = interfaces["ppm"]->load(image_path, &width, &height);
+	
+	std::string filename = image_path;
+	std::size_t found = filename.find_last_of('.') + 1;
+	std::string ext = filename.substr(found, filename.length());
+	std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+
+	unsigned char ** temp = interfaces[ext]->load(image_path, &width, &height);
 	h_img = (unsigned int*)temp;
 	//sdkLoadPPM4ub(image_path, (unsigned char **)&h_img, &width, &height);
 
