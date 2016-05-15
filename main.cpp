@@ -40,6 +40,7 @@ unsigned int *d_temp = NULL;
 StopWatchInterface *timer = 0;
 
 bool runBenchmark = false;
+bool printTimings = false;
 
 /** ALLOW EXTENSIONS */
 std::map<std::string, ImageInterface*> helpers = {
@@ -113,20 +114,23 @@ runSingleTest(const char *ref_file, const char *exec_path)
 
 	//sdkSavePPM4ub(dump_file, h_result, width, height);
 
-	if (!sdkComparePPM(dump_file, sdkFindFilePath(ref_file, exec_path), MAX_EPSILON_ERROR, THRESHOLD, false))
+	/*if (!sdkComparePPM(dump_file, sdkFindFilePath(ref_file, exec_path), MAX_EPSILON_ERROR, THRESHOLD, false))
 	{
 		nTotalErrors++;
+	}*/
+
+	if (printTimings) {
+		printf("  Finished %f sec\n", sdkGetTimerValue(&timer) / 1000.0);
 	}
+	
+	//printf("%.2f Mpixels/sec\n", (width*height / (sdkGetTimerValue(&timer) / 1000.0f)) / 1e6);
 
-	printf("Processing time: %f (ms)\n", sdkGetTimerValue(&timer));
-	printf("%.2f Mpixels/sec\n", (width*height / (sdkGetTimerValue(&timer) / 1000.0f)) / 1e6);
-
-	checkCudaErrors(cudaFree(d_result));
+	//checkCudaErrors(cudaFree(d_result));
 	free(h_result);
 
-	printf("Summary: %d errors!\n", nTotalErrors);
+	//printf("Summary: %d errors!\n", nTotalErrors);
 
-	printf(nTotalErrors == 0 ? "Test passed\n" : "Test failed!\n");
+	//printf(nTotalErrors == 0 ? "Test passed\n" : "Test failed!\n");
 	return (nTotalErrors == 0);
 }
 
@@ -134,8 +138,14 @@ runSingleTest(const char *ref_file, const char *exec_path)
 void applyFilter(const char * image_path, const char * outputFile)
 {
 	//printf("Starting...\n\n");
-	
+	printf("- Processing Gaussian blur on %s...\n", image_path);
+
 	std::string ext = getExtension(image_path);
+
+	if (helpers.count(ext) == 0) {
+		std::cout << "  Format *." << ext << " is not supported.\n";
+		return;
+	}
 
 	unsigned char ** temp = helpers[ext]->load(image_path, &width, &height);
 	h_img = (unsigned int*)temp;
@@ -143,11 +153,12 @@ void applyFilter(const char * image_path, const char * outputFile)
 
 	if (!h_img)
 	{
-		printf("Error unable to load file: '%s'\n", image_path);
+		//printf("Error unable to load file: '%s'\n", image_path);
 		exit(EXIT_FAILURE);
 	}
 
-	printf("Loaded '%s', %d x %d pixels\n", image_path, width, height);
+	//printf("Loaded '%s', %d x %d pixels\n", image_path, width, height);
+	
 
 	nthreads = 64; //потоки
 	//sigma = 1; //радиус размытия
@@ -157,7 +168,7 @@ void applyFilter(const char * image_path, const char * outputFile)
 
 	if (image_path)
 	{
-		printf("(Automated Testing)\n");
+		//printf("(Automated Testing)\n");
 		bool testPassed = runSingleTest(image_path, outputFile);
 
 		cleanup();
@@ -168,8 +179,6 @@ void applyFilter(const char * image_path, const char * outputFile)
 		// profiled. Calling cudaDeviceReset causes all profile data to be
 		// flushed before the application exits
 		cudaDeviceReset();
-
-		exit(testPassed ? EXIT_SUCCESS : EXIT_FAILURE);
 	}
 }
 
@@ -179,15 +188,31 @@ void applyFilter(const char * image_path, const char * outputFile)
 ////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
-	if (argc < 3) {
+	if (argc < 2) {
 		printf("Error input arguments!\n");
 		return 0;
 	}
-	// Get the path of the filename
-	sigma = atoi(argv[1]); //читаем радиус размытия из входных параметров
 
+	int startArgIndex = 1;
+	for (int i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "-t") == 0) {
+			printTimings = true;
+
+			startArgIndex = i + 1;
+		}
+
+		if (strcmp(argv[i], "-r") == 0 && (i + 1) < argc) {
+			printTimings = true;
+			// Get the path of the filename
+			sigma = atoi(argv[i + 1]); //читаем радиус размытия из входных параметров
+			startArgIndex = i + 2;
+			break;
+		}
+		
+	}
+	
 	/** Обрабатывем файлы*/
-	for (int i = 2; i < argc; i++) {
+	for (int i = startArgIndex; i < argc; i++) {
 		applyFilter(argv[i], argv[0]);
 	}
 }
