@@ -8,3 +8,9 @@ unsigned char ** PPMInterface::load(const char *file,
 	sdkLoadPPM4ub(file, (unsigned char **)&temp, w, h);
 	return (unsigned char **)temp;
 }
+
+bool PPMInterface::save(const char *file, unsigned char *data,
+	unsigned int w, unsigned int h)
+{
+	return sdkSavePPM4ub(file, data, w, h);
+}

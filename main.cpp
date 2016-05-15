@@ -17,6 +17,7 @@
 #include <map>
 #include "ImageInterface.h"
 #include "PPMInterface.h"
+#include "StringHelper.h"
 
 
 
@@ -41,7 +42,7 @@ StopWatchInterface *timer = 0;
 bool runBenchmark = false;
 
 /** ALLOW EXTENSIONS */
-std::map<std::string, ImageInterface*> interfaces = {
+std::map<std::string, ImageInterface*> helpers = {
 	{ "ppm", new PPMInterface() } //PPM
 };
 
@@ -106,7 +107,11 @@ runSingleTest(const char *ref_file, const char *exec_path)
 
 	char dump_file[1024];
 	sprintf(dump_file, "lena_%02d.ppm", (int)sigma);
-	sdkSavePPM4ub(dump_file, h_result, width, height);
+
+	std::string ext = getExtension(dump_file);
+	helpers[ext]->save(dump_file, h_result, width, height);
+
+	//sdkSavePPM4ub(dump_file, h_result, width, height);
 
 	if (!sdkComparePPM(dump_file, sdkFindFilePath(ref_file, exec_path), MAX_EPSILON_ERROR, THRESHOLD, false))
 	{
@@ -130,18 +135,15 @@ void applyFilter(const char * image_path, const char * outputFile)
 {
 	//printf("Starting...\n\n");
 	
-	std::string filename = image_path;
-	std::size_t found = filename.find_last_of('.') + 1;
-	std::string ext = filename.substr(found, filename.length());
-	std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+	std::string ext = getExtension(image_path);
 
-	unsigned char ** temp = interfaces[ext]->load(image_path, &width, &height);
+	unsigned char ** temp = helpers[ext]->load(image_path, &width, &height);
 	h_img = (unsigned int*)temp;
 	//sdkLoadPPM4ub(image_path, (unsigned char **)&h_img, &width, &height);
 
 	if (!h_img)
 	{
-		printf("Error unable to load PPM file: '%s'\n", image_path);
+		printf("Error unable to load file: '%s'\n", image_path);
 		exit(EXIT_FAILURE);
 	}
 

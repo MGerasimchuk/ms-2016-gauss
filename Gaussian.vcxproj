@@ -164,8 +164,10 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ImageInterface.h" />
     <ClInclude Include="PPMInterface.h" />
     <ClInclude Include="recursiveGaussian_kernel.cuh" />
+    <ClInclude Include="StringHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PPMInterface.cpp" />
   </ItemGroup>
