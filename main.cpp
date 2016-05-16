@@ -83,65 +83,11 @@ void initCudaBuffers()
 	sdkCreateTimer(&timer);
 }
 
-bool
-runSingleTest(const char *ref_file, const char *exec_path)
-{
-	// allocate memory for result
-	int nTotalErrors = 0;
-	unsigned int *d_result;
-	unsigned int size = width * height * sizeof(unsigned int);
-	checkCudaErrors(cudaMalloc((void **)&d_result, size));
-
-	// warm-up
-	gaussianFilterRGBA(d_img, d_result, d_temp, width, height, sigma, order, nthreads);
-
-	checkCudaErrors(cudaDeviceSynchronize());
-	sdkStartTimer(&timer);
-
-	gaussianFilterRGBA(d_img, d_result, d_temp, width, height, sigma, order, nthreads);
-	checkCudaErrors(cudaDeviceSynchronize());
-	getLastCudaError("Kernel execution failed");
-	sdkStopTimer(&timer);
-
-	unsigned char *h_result = (unsigned char *)malloc(width*height * 4);
-	checkCudaErrors(cudaMemcpy(h_result, d_result, width*height * 4, cudaMemcpyDeviceToHost));
-
-	char dump_file[1024];
-	sprintf(dump_file, "lena_%02d.ppm", (int)sigma);
-
-	std::string ext = getExtension(dump_file);
-	helpers[ext]->save(dump_file, h_result, width, height);
-
-	//sdkSavePPM4ub(dump_file, h_result, width, height);
-
-	/*if (!sdkComparePPM(dump_file, sdkFindFilePath(ref_file, exec_path), MAX_EPSILON_ERROR, THRESHOLD, false))
-	{
-		nTotalErrors++;
-	}*/
-
-	if (printTimings) {
-		printf("  Finished %f sec\n", sdkGetTimerValue(&timer) / 1000.0);
-	}
-	
-	//printf("%.2f Mpixels/sec\n", (width*height / (sdkGetTimerValue(&timer) / 1000.0f)) / 1e6);
-
-	//checkCudaErrors(cudaFree(d_result));
-	free(h_result);
-
-	//printf("Summary: %d errors!\n", nTotalErrors);
-
-	//printf(nTotalErrors == 0 ? "Test passed\n" : "Test failed!\n");
-	return (nTotalErrors == 0);
-}
-
 
 void applyFilter(const char * image_path, const char * outputFile)
 {
-	//printf("Starting...\n\n");
 	printf("- Processing Gaussian blur on %s...\n", image_path);
-
 	std::string ext = getExtension(image_path);
-
 	if (helpers.count(ext) == 0) {
 		std::cout << "  Format *." << ext << " is not supported.\n";
 		return;
@@ -149,35 +95,41 @@ void applyFilter(const char * image_path, const char * outputFile)
 
 	unsigned char ** temp = helpers[ext]->load(image_path, &width, &height);
 	h_img = (unsigned int*)temp;
-	//sdkLoadPPM4ub(image_path, (unsigned char **)&h_img, &width, &height);
 
 	if (!h_img)
 	{
-		//printf("Error unable to load file: '%s'\n", image_path);
-		exit(EXIT_FAILURE);
+		printf("Error unable to load file: '%s'\n", image_path);
+		return;
 	}
-
-	//printf("Loaded '%s', %d x %d pixels\n", image_path, width, height);
-	
-
-	nthreads = 64; //потоки
-	//sigma = 1; //радиус размытия
-
 
 	initCudaBuffers();
 
 	if (image_path)
 	{
-		//printf("(Automated Testing)\n");
-		bool testPassed = runSingleTest(image_path, outputFile);
+		unsigned int *d_result;
+		unsigned int size = width * height * sizeof(unsigned int);
+		checkCudaErrors(cudaMalloc((void **)&d_result, size));
 
+		sdkStartTimer(&timer);
+		gaussianFilterRGBA(d_img, d_result, d_temp, width, height, sigma, order, nthreads);
+		checkCudaErrors(cudaDeviceSynchronize());
+		sdkStopTimer(&timer);
+
+		unsigned char *h_result = (unsigned char *)malloc(width*height * 4);
+		checkCudaErrors(cudaMemcpy(h_result, d_result, width*height * 4, cudaMemcpyDeviceToHost));
+
+		char dump_file[1024];
+		sprintf(dump_file, "GAUSSIAN_%02d.ppm", (int)sigma);
+
+		std::string ext = getExtension(dump_file);
+		helpers[ext]->save(dump_file, h_result, width, height);
+
+		if (printTimings) {
+			printf("  Finished %f sec\n", sdkGetTimerValue(&timer) / 1000.0);
+		}
+
+		free(h_result);
 		cleanup();
-
-		// cudaDeviceReset causes the driver to clean up all state. While
-		// not mandatory in normal operation, it is good practice.  It is also
-		// needed to ensure correct operation when the application is being
-		// profiled. Calling cudaDeviceReset causes all profile data to be
-		// flushed before the application exits
 		cudaDeviceReset();
 	}
 }
