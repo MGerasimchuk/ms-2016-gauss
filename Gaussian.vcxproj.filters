@@ -63,6 +63,9 @@
     <ClInclude Include="StringHelper.h">
       <Filter>Header files\StringHelper</Filter>
     </ClInclude>
+    <ClInclude Include="AvailableInterfaces.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lena.ppm">

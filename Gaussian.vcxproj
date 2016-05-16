@@ -154,6 +154,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <CudaCompile Include="recursiveGaussian_cuda.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AvailableInterfaces.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="helper_cuda.h" />
     <ClInclude Include="helper_functions.h" />

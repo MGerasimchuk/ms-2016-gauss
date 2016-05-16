@@ -13,13 +13,7 @@
 #include <string.h>
 #include <math.h>
 
-/** FOR IMAGE HELPER */
-#include <map>
-#include "ImageInterface.h"
-#include "PPMInterface.h"
-#include "StringHelper.h"
-
-
+#include "AvailableInterfaces.h"
 
 #define MAX(a,b) ((a > b) ? a : b)
 
@@ -41,11 +35,6 @@ StopWatchInterface *timer = 0;
 
 bool runBenchmark = false;
 bool printTimings = false;
-
-/** ALLOW EXTENSIONS */
-std::map<std::string, ImageInterface*> helpers = {
-	{ "ppm", new PPMInterface() } //PPM
-};
 
 extern "C"
 void transpose(unsigned int *d_src, unsigned int *d_dest, unsigned int width, int height);
