@@ -163,17 +163,21 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="helper_string.h" />
     <ClInclude Include="helper_timer.h" />
     <ClInclude Include="ImageInterface.h" />
+    <ClInclude Include="PGMInterface.h" />
     <ClInclude Include="PPMInterface.h" />
     <ClInclude Include="recursiveGaussian_kernel.cuh" />
     <ClInclude Include="StringHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PGMInterface.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PPMInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="lena.pgm" />
     <None Include="lena.ppm" />
+    <None Include="original.ppm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

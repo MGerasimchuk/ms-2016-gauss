@@ -8,4 +8,6 @@ public:
 
 	virtual bool save(const char *file, unsigned char *data,
 		unsigned int w, unsigned int h);
+
+	virtual int getSizeof();
 };

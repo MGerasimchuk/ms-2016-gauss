@@ -9,6 +9,8 @@ public:
 
 	virtual bool save(const char *file, unsigned char *data,
 		unsigned int w, unsigned int h) = 0;
+
+	virtual int getSizeof() = 0;
 };
 
 #endif

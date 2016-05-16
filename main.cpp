@@ -59,9 +59,10 @@ void cleanup()
 	cudaDeviceReset();
 }
 
-void initCudaBuffers()
+
+void initCudaBuffers(int sizeOf)
 {
-	unsigned int size = width * height * sizeof(unsigned int);
+	unsigned int size = width * height * sizeOf;
 
 	// allocate device memory
 	checkCudaErrors(cudaMalloc((void **)&d_img, size));
@@ -82,8 +83,7 @@ void applyFilter(const char * image_path, const char * outputFile)
 		return;
 	}
 
-	unsigned char ** temp = helpers[ext]->load(image_path, &width, &height);
-	h_img = (unsigned int*)temp;
+	h_img = (unsigned int*)helpers[ext]->load(image_path, &width, &height);
 
 	if (!h_img)
 	{
@@ -91,7 +91,7 @@ void applyFilter(const char * image_path, const char * outputFile)
 		return;
 	}
 
-	initCudaBuffers();
+	initCudaBuffers(helpers[ext]->getSizeof());
 
 	if (image_path)
 	{
@@ -108,9 +108,8 @@ void applyFilter(const char * image_path, const char * outputFile)
 		checkCudaErrors(cudaMemcpy(h_result, d_result, width*height * 4, cudaMemcpyDeviceToHost));
 
 		char dump_file[1024];
-		sprintf(dump_file, "GAUSSIAN_%02d.ppm", (int)sigma);
+		sprintf(dump_file, "%s_GAUSSIAN_APPLY_%02d.%s", image_path, (int)sigma, ext.c_str());
 
-		std::string ext = getExtension(dump_file);
 		helpers[ext]->save(dump_file, h_result, width, height);
 
 		if (printTimings) {
@@ -122,7 +121,6 @@ void applyFilter(const char * image_path, const char * outputFile)
 		cudaDeviceReset();
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Program main

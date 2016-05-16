@@ -66,9 +66,18 @@
     <ClInclude Include="AvailableInterfaces.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="PGMInterface.h">
+      <Filter>Header files\ImageHelper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lena.ppm">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="lena.pgm">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="original.ppm">
       <Filter>Resource files</Filter>
     </None>
   </ItemGroup>
@@ -81,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="StringHelper.cpp">
       <Filter>Source files\FIleHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="PGMInterface.cpp">
+      <Filter>Source files\ImageHelper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

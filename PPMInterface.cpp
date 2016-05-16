@@ -14,3 +14,8 @@ bool PPMInterface::save(const char *file, unsigned char *data,
 {
 	return sdkSavePPM4ub(file, data, w, h);
 }
+
+int PPMInterface::getSizeof()
+{
+	return sizeof(unsigned int);
+}
