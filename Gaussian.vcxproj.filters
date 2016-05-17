@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{ca30c77f-1c3b-4994-9142-66f55374e166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{f3deb34b-b2f2-4bfe-a996-66b84e73d635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{a71a8abd-45d6-4032-99c5-97f87a77ef2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Cuda helpers">
+      <UniqueIdentifier>{7de50730-7e54-4236-b0aa-3a97973fd542}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Gaussian">
+      <UniqueIdentifier>{500dcbab-a586-47cb-8330-a780851448e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\ImageHelper">
+      <UniqueIdentifier>{4f5a3330-50dc-4807-ab55-c013957b8094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\ImageHelper">
+      <UniqueIdentifier>{2ae0f7ee-dad5-4054-bd95-f467c961ec94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\FIleHelper">
+      <UniqueIdentifier>{c28cf958-875c-4809-b876-26b1550836d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\StringHelper">
+      <UniqueIdentifier>{e1d9f27b-c2e4-4a34-8190-bb4c7c9a9dfa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="helper_cuda.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_math.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_string.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_functions.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="exception.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_image.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_timer.h">
+      <Filter>Header files\Cuda helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="recursiveGaussian_kernel.cuh">
+      <Filter>Source files\Gaussian</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageInterface.h">
+      <Filter>Header files\ImageHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="PPMInterface.h">
+      <Filter>Header files\ImageHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Header files\StringHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="AvailableInterfaces.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="PGMInterface.h">
+      <Filter>Header files\ImageHelper</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lena.ppm">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="lena.pgm">
+      <Filter>Resource files</Filter>
+    </None>
+    <None Include="original.ppm">
+      <Filter>Resource files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="PPMInterface.cpp">
+      <Filter>Source files\ImageHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Source files\FIleHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="PGMInterface.cpp">
+      <Filter>Source files\ImageHelper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="recursiveGaussian_cuda.cu">
+      <Filter>Source files\Gaussian</Filter>
+    </CudaCompile>
+  </ItemGroup>
+</Project>
