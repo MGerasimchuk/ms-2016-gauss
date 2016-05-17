@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 		}
 
 		if (strcmp(argv[i], "-r") == 0 && (i + 1) < argc) {
-			printTimings = true;
+			//printTimings = true;
 			// Get the path of the filename
 			sigma = atoi(argv[i + 1]); //читаем радиус размытия из входных параметров
 			startArgIndex = i + 2;
